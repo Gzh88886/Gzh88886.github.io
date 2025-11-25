@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星辰塔罗 - 专业运势占卜</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #8a2be2;
+            --secondary: #4b0082;
+            --accent: #ff69b4;
+            --light: #f8f4ff;
+            --dark: #1a0526;
+            --text: #333333;
+            --text-light: #ffffff;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0526 0%, #2d0b42 50%, #4a1e6b 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: var(--accent);
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, var(--accent), #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #c9b6e2;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .user-input-section {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tarot-display {
+            flex: 2;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 1px solid rgba(255, 105, 180, 0.3);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2 i {
+            margin-right: 10px;
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #c9b6e2;
+            font-weight: 500;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        /* 牌阵选择 */
+        .spread-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .spread-option {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .spread-option:hover {
+            background: rgba(255, 105, 180, 0.1);
+            border-color: rgba(255, 105, 180, 0.3);
+        }
+        
+        .spread-option.active {
+            background: rgba(255, 105, 180, 0.2);
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+        }
+        
+        /* 塔罗牌样式 */
+        .tarot-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .tarot-card {
+            width: 150px;
+            height: 250px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .tarot-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 2px solid var(--accent);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, var(--accent), #ff8cc6);
+            transform: rotateY(180deg);
+            color: white;
+            padding: 10px;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .card-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card-meaning {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        
+        /* 运势解读区域 */
+        .reading-result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-title {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .result-content {
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        
+        .result-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-section:last-child {
+            border-bottom: none;
+        }
+        
+        .result-section h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 历史记录 */
+        .history-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+        }
+        
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .history-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .history-date {
+            font-size: 0.9rem;
+            color: #c9b6e2;
+            margin-bottom: 5px;
+        }
+        
+        .history-question {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .history-cards {
+            font-size: 0.9rem;
+            color: #c9b6e2;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #c9b6e2;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+        
+        /* 星星背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tarot-card {
+                width: 120px;
+                height: 200px;
+            }
+            
+            .spread-options {
+                flex-direction: column;
+            }
+        }
+        
+        /* 图标样式 */
+        .icon {
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        /* 运势指示器 */
+        .luck-meter {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .luck-level {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+        
+        .luck-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #c9b6e2;
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* 加载动画 */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <header>
+            <h1>星辰塔罗</h1>
+            <p class="subtitle">探索未知，洞悉命运，让塔罗牌指引您前行的道路。通过古老的智慧，揭示当下的运势与未来的可能。</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="user-input-section">
+                <h2><span class="icon">🔮</span>个人信息</h2>
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthdate">出生日期</label>
+                    <input type="date" id="birthdate">
+                </div>
+                
+                <div class="form-group">
+                    <label for="question">您的问题</label>
+                    <textarea id="question" placeholder="请描述您想询问的问题..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reading-type">占卜类型</label>
+                    <select id="reading-type">
+                        <option value="daily">每日运势</option>
+                        <option value="love">爱情运势</option>
+                        <option value="career">事业运势</option>
+                        <option value="financial">财运分析</option>
+                        <option value="general">综合运势</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>牌阵选择</label>
+                    <div class="spread-options">
+                        <div class="spread-option active" data-spread="single">
+                            <div>单张牌</div>
+                            <small>快速洞察</small>
+                        </div>
+                        <div class="spread-option" data-spread="three">
+                            <div>三张牌</div>
+                            <small>过去-现在-未来</small>
+                        </div>
+                        <div class="spread-option" data-spread="celtic">
+                            <div>凯尔特十字</div>
+                            <small>深度分析</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="draw-cards">
+                    <span class="icon">✨</span>抽取塔罗牌
+                </button>
+                
+                <div class="loader" id="loader">
+                    <div class="loader-spinner"></div>
+                    <p>正在连接宇宙能量，解读塔罗牌的奥秘...</p>
+                </div>
+            </section>
+            
+            <section class="tarot-display">
+                <h2><span class="icon">📜</span>塔罗牌阵</h2>
+                <div class="tarot-cards" id="tarot-cards">
+                    <div class="instruction">
+                        <p>请填写左侧信息并抽取塔罗牌，牌阵将在此显示。</p>
+                    </div>
+                </div>
+                
+                <div class="reading-result" id="reading-result">
+                    <div class="result-title">
+                        <span class="icon">🌟</span>运势解读
+                    </div>
+                    <div class="result-content" id="result-content">
+                        <p>请先填写个人信息并抽取塔罗牌，系统将为您生成专属运势解读。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <section class="history-section">
+            <h2><span class="icon">📖</span>历史占卜记录</h2>
+            <div class="history-list" id="history-list">
+                <div class="empty-history">
+                    <p>暂无历史记录，完成一次占卜后记录将显示在这里。</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>塔罗牌占卜结果仅供参考，命运掌握在自己手中</p>
+            <p>© 2023 星辰塔罗 | 探索内心，预见未来</p>
+        </footer>
+    </div>
+
+    <script>
+        // 塔罗牌数据 - 完整78张塔罗牌
+        const tarotDeck = [
+            // 大阿卡纳 (22张)
+            { name: "愚者", number: 0, upright: "新的开始,冒险,自由,天真", reversed: "鲁莽,风险,不确定,愚蠢" },
+            { name: "魔术师", number: 1, upright: "意志力,能力,资源,创造力", reversed: "欺骗,操纵,未开发潜力,延迟" },
+            { name: "女祭司", number: 2, upright: "直觉,潜意识,神秘,智慧", reversed: "秘密,压抑,未表达的情感,忽视" },
+            { name: "女皇", number: 3, upright: "丰饶,母性,创造力,自然", reversed: "依赖,过度放纵,创造力受阻,疏忽" },
+            { name: "皇帝", number: 4, upright: "权威,结构,控制,稳定", reversed: "专制,僵化,控制欲过强,不灵活" },
+            { name: "教皇", number: 5, upright: "信仰,传统,灵性,教育", reversed: "教条,传统束缚,反叛,新思想" },
+            { name: "恋人", number: 6, upright: "爱情,选择,和谐,关系", reversed: "冲突,分离,错误选择,不和谐" },
+            { name: "战车", number: 7, upright: "意志力,胜利,自律,控制", reversed: "失控,冲突,缺乏方向,侵略" },
+            { name: "力量", number: 8, upright: "勇气,耐心,控制,同情", reversed: "软弱,恐惧,自我怀疑,无力" },
+            { name: "隐士", number: 9, upright: "内省,寻求真理,孤独,智慧", reversed: "孤立,逃避,拒绝帮助,孤独" },
+            { name: "命运之轮", number: 10, upright: "命运,转折点,机遇,循环", reversed: "坏运气,抗拒改变,外部控制,延迟" },
+            { name: "正义", number: 11, upright: "公正,真理,因果,平衡", reversed: "不公正,偏见,责任逃避,不公平" },
+            { name: "倒吊人", number: 12, upright: "牺牲,新视角,顺从,等待", reversed: "停滞,无谓牺牲,抗拒,不耐烦" },
+            { name: "死神", number: 13, upright: "结束,转变,新生,释放", reversed: "抗拒改变,停滞,恐惧,缓慢变化" },
+            { name: "节制", number: 14, upright: "平衡,调和,耐心,和谐", reversed: "不平衡,极端,缺乏节制,冲突" },
+            { name: "恶魔", number: 15, upright: "束缚,物质主义,欲望,成瘾", reversed: "解脱,超越限制,新认识,释放" },
+            { name: "高塔", number: 16, upright: "突然变化,启示,崩溃,释放", reversed: "避免灾难,恐惧改变,压抑,延迟" },
+            { name: "星星", number: 17, upright: "希望,灵感,宁静,信心", reversed: "绝望,失望,失去信心,悲观" },
+            { name: "月亮", number: 18, upright: "幻觉,恐惧,潜意识,直觉", reversed: "释放恐惧,真相,内心平静,清晰" },
+            { name: "太阳", number: 19, upright: "快乐,成功,活力,积极", reversed: "暂时挫折,过度乐观,自负,延迟" },
+            { name: "审判", number: 20, upright: "觉醒,重生,内省,赦免", reversed: "自我怀疑,拒绝召唤,恐惧改变,停滞" },
+            { name: "世界", number: 21, upright: "完成,成就,旅行,整合", reversed: "未完成,延迟,需要闭合,不完美" },
+            
+            // 权杖组 (14张)
+            { name: "权杖王牌", suit: "wands", upright: "创造力,新冒险,灵感,潜力", reversed: "延迟,未实现的创意,缺乏方向" },
+            { name: "权杖二", suit: "wands", upright: "规划,决策,发现,未来", reversed: "恐惧改变,不良规划,犹豫" },
+            { name: "权杖三", suit: "wands", upright: "扩张,远见,合作,进步", reversed: "延迟,挫折,缺乏远见" },
+            { name: "权杖四", suit: "wands", upright: "稳定,庆祝,和谐,基础", reversed: "不稳定,缺乏基础,过渡" },
+            { name: "权杖五", suit: "wands", upright: "冲突,竞争,争论,挑战", reversed: "避免冲突,内在冲突,解决" },
+            { name: "权杖六", suit: "wands", upright: "胜利,进步,自信,成功", reversed: "失败,缺乏认可,自负" },
+            { name: "权杖七", suit: "wands", upright: "勇气,挑战,坚持,防御", reversed: "放弃,不知所措,防御" },
+            { name: "权杖八", suit: "wands", upright: "快速行动,进展,消息,旅行", reversed: "延迟,挫折,急躁,混乱" },
+            { name: "权杖九", suit: "wands", upright: "韧性,谨慎,坚持,经验", reversed: "固执,防御,偏执,疲惫" },
+            { name: "权杖十", suit: "wands", upright: "负担,责任,努力,压力", reversed: "无法承受,逃避责任,释放" },
+            { name: "权杖侍从", suit: "wands", upright: "探索,热情,消息,自由精神", reversed: "坏消息,犹豫,不可靠" },
+            { name: "权杖骑士", suit: "wands", upright: "能量,激情,冒险,冲动", reversed: "愤怒,冲动,延迟,挫折" },
+            { name: "权杖皇后", suit: "wands", upright: "自信,热情,独立,活力", reversed: "嫉妒,自私,愤怒,缺乏自信" },
+            { name: "权杖国王", suit: "wands", upright: "领导,远见,企业家精神,荣誉", reversed: "支配,急躁,无情,不灵活" },
+            
+            // 圣杯组 (14张)
+            { name: "圣杯王牌", suit: "cups", upright: "新情感,直觉,创造力,灵性", reversed: "情感闭塞,空虚,失去联系" },
+            { name: "圣杯二", suit: "cups", upright: "和谐,伙伴关系,连接,吸引力", reversed: "不平衡,分离,误解" },
+            { name: "圣杯三", suit: "cups", upright: "庆祝,友谊,创造力,社区", reversed: "过度放纵,八卦,孤立" },
+            { name: "圣杯四", suit: "cups", upright: "沉思,不满,重新评估,退缩", reversed: "错过机会,厌倦,觉醒" },
+            { name: "圣杯五", suit: "cups", upright: "损失,悲伤,自怜,失望", reversed: "接受,前进,寻找希望" },
+            { name: "圣杯六", suit: "cups", upright: "怀旧,童年,回忆,单纯", reversed: "生活在过去,前进,放手" },
+            { name: "圣杯七", suit: "cups", upright: "选择,幻想,决策,想象", reversed: "缺乏目的,困惑,清醒" },
+            { name: "圣杯八", suit: "cups", upright: "离开,寻求,放弃,旅行", reversed: "犹豫,恐惧,停滞,满足" },
+            { name: "圣杯九", suit: "cups", upright: "满足,愿望成真,成就,快乐", reversed: "不满意,未实现的愿望,贪婪" },
+            { name: "圣杯十", suit: "cups", upright: "和谐,幸福,家庭,团结", reversed: "不和谐,破碎家庭,冲突" },
+            { name: "圣杯侍从", suit: "cups", upright: "敏感,直觉,创意,梦想家", reversed: "情感脆弱,不成熟,逃避现实" },
+            { name: "圣杯骑士", suit: "cups", upright: "浪漫,魅力,想象力,情感", reversed: "情绪化,不切实际,失望" },
+            { name: "圣杯皇后", suit: "cups", upright: "同情,直觉,情感,关怀", reversed: "情绪依赖,不安全感,自我吸收" },
+            { name: "圣杯国王", suit: "cups", upright: "情感平衡,同情,智慧,支持", reversed: "情绪操纵,冷漠,过度敏感" },
+            
+            // 宝剑组 (14张)
+            { name: "宝剑王牌", suit: "swords", upright: "突破,新想法,智慧,真理", reversed: "混乱,破坏,误导信息" },
+            { name: "宝剑二", suit: "swords", upright: "艰难选择,僵局,平衡", reversed: "优柔寡断,混乱,披露" },
+            { name: "宝剑三", suit: "swords", upright: "心碎,悲伤,痛苦,分离", reversed: "恢复,宽恕,和解" },
+            { name: "宝剑四", suit: "swords", upright: "休息,恢复,沉思,撤退", reversed: "疲惫, burnout,重新进入世界" },
+            { name: "宝剑五", suit: "swords", upright: "冲突,胜利不惜代价,敌意", reversed: "和解,妥协,吸取教训" },
+            { name: "宝剑六", suit: "swords", upright: "过渡,离开,向前迈进", reversed: "停滞,无法前进,情感包袱" },
+            { name: "宝剑七", suit: "swords", upright: "欺骗,策略,保密,计划", reversed: "真相暴露,忏悔,醒悟" },
+            { name: "宝剑八", suit: "swords", upright: "限制,束缚,无力感,焦虑", reversed: "新视角,自由,释放" },
+            { name: "宝剑九", suit: "swords", upright: "焦虑,担忧,恐惧,失眠", reversed: "希望,康复,面对恐惧" },
+            { name: "宝剑十", suit: "swords", upright: "结束,失败,痛苦,背叛", reversed: "恢复,重生,新开始" },
+            { name: "宝剑侍从", suit: "swords", upright: "好奇心,警觉,新想法,消息", reversed: "欺骗,恶意,轻率" },
+            { name: "宝剑骑士", suit: "swords", upright: "野心,行动,果断,专注", reversed: "冲动,侵略,鲁莽" },
+            { name: "宝剑皇后", suit: "swords", upright: "独立,判断,清晰,原则", reversed: "批评,冷酷,不宽容" },
+            { name: "宝剑国王", suit: "swords", upright: "智慧,权威,清晰,真理", reversed: "操纵,残酷,滥用权力" },
+            
+            // 星币组 (14张)
+            { name: "星币王牌", suit: "pentacles", upright: "繁荣,新财务机会, abundance", reversed: "错失机会, scarcity,投资失败" },
+            { name: "星币二", suit: "pentacles", upright: "平衡,适应,资源管理", reversed: "不平衡, disorganization,财务问题" },
+            { name: "星币三", suit: "pentacles", upright: "团队合作,协作,学习,技能", reversed: "缺乏团队合作, disorganized,竞争" },
+            { name: "星币四", suit: "pentacles", upright: "节约,安全,保守,控制", reversed: "贪婪,物质主义,吝啬" },
+            { name: "星币五", suit: "pentacles", upright: "困难,贫困,孤立,忧虑", reversed: "恢复,慈善,新开始" },
+            { name: "星币六", suit: "pentacles", upright: "慷慨,慈善,给予,接受", reversed: "自私,不平衡财富, strings attached" },
+            { name: "星币七", suit: "pentacles", upright: "耐心,收获,努力,评估", reversed: "缺乏成果,拖延,不耐烦" },
+            { name: "星币八", suit: "pentacles", upright: "技能,工艺,重复,专注", reversed: "缺乏激情,无目的工作,低质量" },
+            { name: "星币九", suit: "pentacles", upright: "丰富,自给自足,成就,享受", reversed: "过度依赖,缺乏成就感,虚假成功" },
+            { name: "星币十", suit: "pentacles", upright: "财富,遗产,家庭,长期安全", reversed: "家庭冲突,不稳定,财务损失" },
+            { name: "星币侍从", suit: "pentacles", upright: "野心,欲望学习,财务机会", reversed: "缺乏进步,无纪律,鲁莽支出" },
+            { name: "星币骑士", suit: "pentacles", upright: "责任,勤奋,传统,安全", reversed: "懒惰,无聊,停滞,粗心" },
+            { name: "星币皇后", suit: "pentacles", upright: "繁荣,舒适,安全,慷慨", reversed: "物质主义,贪婪,依赖,不安全" },
+            { name: "星币国王", suit: "pentacles", upright: "丰富,安全,领导,控制", reversed: "权威,贪婪,保守,不灵活" }
+        ];
+
+        // 生成随机星星背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机位置和大小
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机动画延迟
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            setupEventListeners();
+            loadHistory();
+        });
+        
+        // 设置事件监听器
+        function setupEventListeners() {
+            // 牌阵选择
+            const spreadOptions = document.querySelectorAll('.spread-option');
+            spreadOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    spreadOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 抽取塔罗牌按钮
+            document.getElementById('draw-cards').addEventListener('click', drawTarotCards);
+        }
+        
+        // 抽取塔罗牌
+        function drawTarotCards() {
+            const name = document.getElementById('name').value;
+            const question = document.getElementById('question').value;
+            const readingType = document.getElementById('reading-type').value;
+            const activeSpread = document.querySelector('.spread-option.active').dataset.spread;
+            
+            if (!name || !question) {
+                alert('请填写姓名和问题');
+                return;
+            }
+            
+            // 显示加载动画
+            const loader = document.getElementById('loader');
+            const drawButton = document.getElementById('draw-cards');
+            loader.style.display = 'block';
+            drawButton.disabled = true;
+            
+            // 清空之前的牌
+            const tarotCardsContainer = document.getElementById('tarot-cards');
+            tarotCardsContainer.innerHTML = '';
+            
+            // 根据牌阵抽取牌
+            let cardCount = 1;
+            if (activeSpread === 'three') cardCount = 3;
+            if (activeSpread === 'celtic') cardCount = 10;
+            
+            const selectedCards = [];
+            const usedIndices = new Set();
+            
+            // 随机选择不重复的牌
+            while (selectedCards.length < cardCount) {
+                const randomIndex = Math.floor(Math.random() * tarotDeck.length);
+                if (!usedIndices.has(randomIndex)) {
+                    usedIndices.add(randomIndex);
+                    const card = {...tarotDeck[randomIndex]};
+                    
+                    // 随机决定正逆位
+                    card.isReversed = Math.random() > 0.5;
+                    selectedCards.push(card);
+                }
+            }
+            
+            // 延迟显示牌，创造神秘感
+            setTimeout(() => {
+                // 创建牌元素
+                selectedCards.forEach((card, index) => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'tarot-card fade-in';
+                    cardElement.style.animationDelay = `${index * 0.3}s`;
+                    
+                    // 为凯尔特十字牌阵添加位置标识
+                    let positionName = '';
+                    if (activeSpread === 'celtic') {
+                        const positions = [
+                            "当前状况", "挑战", "基础", "过去", "目标",
+                            "未来", "自我认知", "环境", "希望与恐惧", "结果"
+                        ];
+                        positionName = positions[index];
+                    } else if (activeSpread === 'three') {
+                        const positions = ["过去", "现在", "未来"];
+                        positionName = positions[index];
+                    }
+                    
+                    cardElement.innerHTML = `
+                        <div class="card-inner">
+                            <div class="card-front">
+                                ${positionName ? `<div>${positionName}</div>` : '塔罗牌'}
+                            </div>
+                            <div class="card-back">
+                                <div class="card-name">${card.name} ${card.isReversed ? '(逆位)' : '(正位)'}</div>
+                                <div class="card-meaning">${card.isReversed ? card.reversed : card.upright}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 添加点击翻转效果
+                    cardElement.addEventListener('click', function() {
+                        this.classList.toggle('flipped');
+                    });
+                    
+                    tarotCardsContainer.appendChild(cardElement);
+                    
+                    // 延迟显示牌，创造动画效果
+                    setTimeout(() => {
+                        cardElement.classList.add('flipped');
+                    }, 500 + index * 300);
+                });
+                
+                // 生成解读
+                generateReading(name, question, readingType, activeSpread, selectedCards);
+                
+                // 保存到历史记录
+                saveToHistory(name, question, readingType, activeSpread, selectedCards);
+                
+                // 隐藏加载动画
+                loader.style.display = 'none';
+                drawButton.disabled = false;
+            }, 1500);
+        }
+        
+        // 生成运势解读
+        function generateReading(name, question, readingType, spreadType, cards) {
+            const resultContent = document.getElementById('result-content');
+            
+            // 根据占卜类型和牌生成解读
+            let reading = '';
+            
+            // 根据占卜类型添加特定解读
+            const readingTypeText = {
+                'daily': '今日',
+                'love': '爱情',
+                'career': '事业',
+                'financial': '财运',
+                'general': '整体'
+            }[readingType];
+            
+            reading += `<div class="result-section">
+                <h4><span class="icon">💫</span>${readingTypeText}运势解读</h4>
+                <p>亲爱的${name}，关于您的问题「${question}」，以下是塔罗牌为您揭示的运势：</p>
+            </div>`;
+            
+            // 根据牌阵生成解读
+            if (spreadType === 'single') {
+                const card = cards[0];
+                reading += `<div class="result-section">
+                    <h4><span class="icon">🃏</span>牌面解析</h4>
+                    <p>您抽到的牌是<strong>${card.name}</strong>（${card.isReversed ? '逆位' : '正位'}）。</p>
+                    <p>${card.isReversed ? card.reversed : card.upright}。</p>
+                    <p>${generateDetailedInterpretation(card, readingType)}</p>
+                </div>`;
+            } else if (spreadType === 'three') {
+                reading += `<div class="result-section">
+                    <h4><span class="icon">🃏</span>牌面解析</h4>
+                    <p><strong>过去：${cards[0].name}</strong>（${cards[0].isReversed ? '逆位' : '正位'}） - ${cards[0].isReversed ? cards[0].reversed : cards[0].upright}</p>
+                    <p><strong>现在：${cards[1].name}</strong>（${cards[1].isReversed ? '逆位' : '正位'}） - ${cards[1].isReversed ? cards[1].reversed : cards[1].upright}</p>
+                    <p><strong>未来：${cards[2].name}</strong>（${cards[2].isReversed ? '逆位' : '正位'}） - ${cards[2].isReversed ? cards[2].reversed : cards[2].upright}</p>
+                    <p>${generateThreeCardReading(cards, readingType)}</p>
+                </div>`;
+            } else if (spreadType === 'celtic') {
+                reading += `<div class="result-section">
+                    <h4><span class="icon">🃏</span>牌面解析</h4>
+                    <p>您使用了凯尔特十字牌阵，这是一种深入的占卜方式：</p>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                `;
+                cards.forEach((card, index) => {
+                    const positions = [
+                        "当前状况", "挑战", "基础", "过去", "目标",
+                        "未来", "自我认知", "环境", "希望与恐惧", "结果"
+                    ];
+                    reading += `<div><strong>${positions[index]}：</strong> ${card.name}（${card.isReversed ? '逆位' : '正位'}）</div>`;
+                });
+                reading += `</div><p>${generateCelticCrossReading(cards, readingType)}</p></div>`;
+            }
+            
+            // 添加运势指数
+            reading += `<div class="result-section">
+                <h4><span class="icon">📊</span>运势指数</h4>
+                ${generateLuckMeter(cards, readingType)}
+            </div>`;
+            
+            // 添加运势建议
+            reading += `<div class="result-section">
+                <h4><span class="icon">💡</span>运势建议</h4>
+                <p>${generateAdvice(cards, readingType)}</p>
+            </div>`;
+            
+            resultContent.innerHTML = reading;
+        }
+        
+        // 生成单张牌的详细解读
+        function generateDetailedInterpretation(card, readingType) {
+            const interpretations = {
+                'daily': `今天，这张牌提示您${card.isReversed ? '需要警惕' : '可以关注'}${card.isReversed ? card.reversed : card.upright}的方面。`,
+                'love': `在感情方面，${card.name}表示${card.isReversed ? '可能遇到' : '预示着'}${card.isReversed ? card.reversed : card.upright}的情感状况。`,
+                'career': `在事业方面，${card.name}暗示${card.isReversed ? '需要注意' : '将迎来'}${card.isReversed ? card.reversed : card.upright}的职业发展。`,
+                'financial': `在财务方面，${card.name}表明${card.isReversed ? '要谨慎对待' : '有机会获得'}${card.isReversed ? card.reversed : card.upright}的财富机遇。`,
+                'general': `在整体运势上，${card.name}象征着${card.isReversed ? '可能面临' : '即将经历'}${card.isReversed ? card.reversed : card.upright}的人生阶段。`
+            };
+            
+            return interpretations[readingType] || interpretations['general'];
+        }
+        
+        // 生成三张牌阵的解读
+        function generateThreeCardReading(cards, readingType) {
+            let interpretation = "从过去到现在再到未来，这个牌阵揭示了您运势的发展轨迹。";
+            
+            // 根据正逆位数量判断整体趋势
+            const reversedCount = cards.filter(card => card.isReversed).length;
+            
+            if (reversedCount === 0) {
+                interpretation += "所有牌都是正位，表明您的运势正在积极发展，事情会朝着有利的方向前进。";
+            } else if (reversedCount === 1) {
+                interpretation += "大部分牌是正位，只有一张逆位，表明整体趋势良好，但需要注意某个特定方面的挑战。";
+            } else if (reversedCount === 2) {
+                interpretation += "有两张逆位牌，表明您可能面临一些阻力或挑战，需要更多的努力来克服困难。";
+            } else {
+                interpretation += "所有牌都是逆位，表明当前情况比较复杂，可能需要重新评估您的选择和方法。";
+            }
+            
+            return interpretation;
+        }
+        
+        // 生成凯尔特十字牌阵的解读
+        function generateCelticCrossReading(cards, readingType) {
+            return "凯尔特十字牌阵提供了对您问题的全面分析。这个复杂的牌阵揭示了问题的各个方面，从表面现象到深层原因，从过去的影响到未来的可能发展。建议您仔细思考每张牌在自己生活中的对应意义，这将帮助您获得更深刻的洞察。";
+        }
+        
+        // 生成运势指数
+        function generateLuckMeter(cards, readingType) {
+            // 计算运势指数 (0-100)
+            let luckScore = 50; // 基础分数
+            
+            // 根据正逆位调整分数
+            const reversedCount = cards.filter(card => card.isReversed).length;
+            const totalCards = cards.length;
+            
+            // 逆位牌越多，分数越低
+            luckScore -= (reversedCount / totalCards) * 30;
+            
+            // 根据牌的类型调整分数
+            cards.forEach(card => {
+                // 大阿卡纳牌影响力更大
+                if (card.number !== undefined) {
+                    // 某些大阿卡纳牌代表好运
+                    if ([0, 1, 3, 6, 10, 14, 17, 19, 21].includes(card.number)) {
+                        luckScore += card.isReversed ? -5 : 10;
+                    }
+                    // 某些大阿卡纳牌代表挑战
+                    if ([12, 13, 15, 16, 18].includes(card.number)) {
+                        luckScore += card.isReversed ? 5 : -10;
+                    }
+                }
+                
+                // 根据占卜类型调整
+                if (readingType === 'love' && card.suit === 'cups') {
+                    luckScore += card.isReversed ? -5 : 10;
+                }
+                if (readingType === 'career' && card.suit === 'wands') {
+                    luckScore += card.isReversed ? -5 : 10;
+                }
+                if (readingType === 'financial' && card.suit === 'pentacles') {
+                    luckScore += card.isReversed ? -5 : 10;
+                }
+            });
+            
+            // 确保分数在0-100之间
+            luckScore = Math.max(0, Math.min(100, Math.round(luckScore)));
+            
+            // 确定运势等级和颜色
+            let luckLevel, color;
+            if (luckScore >= 80) {
+                luckLevel = "极佳";
+                color = "#4CAF50";
+            } else if (luckScore >= 60) {
+                luckLevel = "良好";
+                color = "#8BC34A";
+            } else if (luckScore >= 40) {
+                luckLevel = "一般";
+                color = "#FFC107";
+            } else if (luckScore >= 20) {
+                luckLevel = "较差";
+                color = "#FF9800";
+            } else {
+                luckLevel = "不佳";
+                color = "#F44336";
+            }
+            
+            return `
+                <div class="luck-meter">
+                    <div class="luck-level" style="width: ${luckScore}%; background: ${color};"></div>
+                </div>
+                <div class="luck-label">
+                    <span>${luckLevel}</span>
+                    <span>${luckScore}分</span>
+                </div>
+            `;
+        }
+        
+        // 生成运势建议
+        function generateAdvice(cards, readingType) {
+            const reversedCount = cards.filter(card => card.isReversed).length;
+            const totalCards = cards.length;
+            
+            let advice = "";
+            
+            if (reversedCount / totalCards > 0.7) {
+                advice = "当前阶段挑战较多，建议您保持耐心，审慎行事。遇到困难时不要急于求成，而是应该深入分析问题的根源。可以考虑寻求他人的帮助或建议，共同面对挑战。";
+            } else if (reversedCount / totalCards > 0.3) {
+                advice = "运势中有挑战也有机遇，建议您平衡乐观与谨慎。对于有利的方面可以积极行动，对于潜在的困难要提前准备。保持灵活应变的态度，将有助于您把握机会、规避风险。";
+            } else {
+                advice = "当前运势较为顺畅，是采取行动的好时机。建议您把握机会，积极推进自己的计划和目标。同时也要保持谦逊和感恩之心，与他人分享成功，这将为您带来更长远的福报。";
+            }
+            
+            // 根据占卜类型添加特定建议
+            const typeAdvice = {
+                'daily': "今天是一个特别的日子，注意观察身边的征兆和机会。保持开放的心态，可能会有意外的收获。",
+                'love': "在感情关系中，真诚沟通是解决问题的关键。表达您的感受，同时也倾听对方的心声。",
+                'career': "职业发展需要长期规划，同时也需要把握眼前的机会。考虑提升自己的技能，为未来做好准备。",
+                'financial': "财务管理需要谨慎，避免冲动消费和投资。考虑制定预算计划，合理分配资源。",
+                'general': "保持积极心态，相信自己的能力，您能够克服任何挑战。关注身心健康，平衡工作与生活。"
+            }[readingType];
+            
+            return advice + " " + typeAdvice;
+        }
+        
+        // 保存到历史记录
+        function saveToHistory(name, question, readingType, spreadType, cards) {
+            const history = JSON.parse(localStorage.getItem('tarotHistory') || '[]');
+            
+            const historyItem = {
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                name,
+                question,
+                readingType,
+                spreadType,
+                cards: cards.map(card => ({
+                    name: card.name,
+                    isReversed: card.isReversed
+                }))
+            };
+            
+            history.unshift(historyItem);
+            
+            // 只保留最近10条记录
+            if (history.length > 10) {
+                history.pop();
+            }
+            
+            localStorage.setItem('tarotHistory', JSON.stringify(history));
+            
+            // 更新历史记录显示
+            loadHistory();
+        }
+        
+        // 加载历史记录
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('tarotHistory') || '[]');
+            const historyList = document.getElementById('history-list');
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<div class="empty-history"><p>暂无历史记录，完成一次占卜后记录将显示在这里。</p></div>';
+                return;
+            }
+            
+            historyList.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="history-date">${item.date}</div>
+                    <div class="history-question">${item.question}</div>
+                    <div class="history-cards">${item.cards.map(card => `${card.name}${card.isReversed ? '(逆)' : ''}`).join(', ')}</div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
